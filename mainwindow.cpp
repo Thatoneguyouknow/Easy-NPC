@@ -111,7 +111,7 @@ void MainWindow::on_NEW_clicked()
 void MainWindow::on_NewChar()
 {
     Generator test = Generator();
-    availableGens.insert(pair<int, Generator>(test.getGenID(), test));
+    availableGens.insert(pair<unsigned long, Generator>(test.getGenID(), test));
 
     RecentView->display_char(test.getGenID());
 }
