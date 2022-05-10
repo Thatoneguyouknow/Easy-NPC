@@ -133,12 +133,38 @@ string Generator::generateName()
 
 int Generator::generateRace()
 {
-    return  rand() % availableRaces.size();
+    int rand_num = rand() % availableRaces.size();
+    map<int, Race>::iterator it = availableRaces.begin();
+    for ( int counter = 0; counter <= rand_num; counter++ )
+    {
+        if( counter == rand_num )
+        {
+            return it->first;
+        }
+        else
+        {
+            it++;
+        }
+    }
+    return it->first;
 }
 
 int Generator::generateClass()
 {
-    return rand() % availableClasses.size();
+    int rand_num = rand() % availableClasses.size();
+    map<int, Class>::iterator it = availableClasses.begin();
+    for ( int counter = 0; counter <= rand_num; counter++ )
+    {
+        if( counter == rand_num )
+        {
+            return it->first;
+        }
+        else
+        {
+            it++;
+        }
+    }
+    return it->first;
 }
 
 array<int, 2> Generator::generateAlign()
