@@ -81,3 +81,8 @@ void RaceSaver::removeAllAttributes()
     query.exec("DELETE FROM RACE");
     db.close();
 }
+
+int RaceSaver::removeAttribute(int toRemove)
+{
+    return -1;
+}

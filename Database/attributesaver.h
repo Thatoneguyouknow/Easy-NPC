@@ -23,6 +23,14 @@ public:
     virtual int saveAttributes() = 0;
     virtual int readAttributes() = 0;
     virtual void removeAllAttributes() {};
+    int removeAttribute(int toRemove)
+    {
+        if(toRemove)
+        {
+            return -1;
+        }
+        return -1;
+    }
 };
 
 #endif // ATTRIBUTESAVER_H

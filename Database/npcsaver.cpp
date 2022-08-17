@@ -98,5 +98,28 @@ void NpcSaver::removeAllAttributes()
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
     query.exec("DELETE FROM NPC");
+    query.exec("SELECT ID, NAME FROM NPC");
+    while(query.next())
+    {
+        qDebug() << query.value(0).toString() << query.value(1).toString();
+    }
     db.close();
+}
+
+int NpcSaver::removeAttribute(int toRemove)
+{
+    QSqlDatabase db = QSqlDatabase::database();
+    QSqlQuery query;
+    query.prepare("DELETE FROM NPC WHERE ID = :id");
+    query.bindValue(":id", toRemove);
+    try
+    {
+        query.exec();
+    }
+    catch(...)
+    {
+        qDebug() << "Cannot dlete NPC: " << query.lastError().text();
+        return -1;
+    }
+    return 0;
 }

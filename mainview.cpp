@@ -166,7 +166,7 @@ void MainView::refreshRace()
         Recents->removeWidget(card->second);
         delete card->second;
     }
-    clCards.clear();
+    rCards.clear();
 
     // recreate all cards
     map<int, Race>::iterator it;

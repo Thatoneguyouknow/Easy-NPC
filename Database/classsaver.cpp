@@ -81,3 +81,8 @@ void ClassSaver::removeAllAttributes()
     query.exec("DELETE FROM CLASS");
     db.close();
 }
+
+int ClassSaver::removeAttribute(int toRemove)
+{
+    return -1;
+}

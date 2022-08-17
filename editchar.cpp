@@ -17,13 +17,13 @@ editchar::editchar(unsigned long toDisplay, QWidget *parent) :
     map<int, Race>::iterator raceIt;
     for( raceIt=availableRaces.begin(); raceIt!=availableRaces.end(); raceIt++ )
     {
-        //racePos.push_back(raceIt->first);
+        racePos.push_back(raceIt->first);
         ui->RaceBox->addItem(QString::fromStdString(raceIt->second.getsetName()));
     }
     map<int, Class>::iterator classIt;
     for( classIt=availableClasses.begin(); classIt != availableClasses.end(); classIt++ )
     {
-        //classPos.push_back(classIt->first);
+        classPos.push_back(classIt->first);
         ui->ClassBox->addItem(QString::fromStdString(classIt->second.getsetName()));
     }
     for( int i=0; i < (int)alignStrs.size(); i++ )
@@ -32,8 +32,8 @@ editchar::editchar(unsigned long toDisplay, QWidget *parent) :
     }
 
     // set combo box values
-    ui->ClassBox->setCurrentIndex(availableGens.at(toDisplay).getsetClass());
-    ui->RaceBox->setCurrentIndex(availableGens.at(toDisplay).getsetRace());
+    ui->ClassBox->setCurrentIndex(searchPos(classPos, availableGens.at(toDisplay).getsetClass()));
+    ui->RaceBox->setCurrentIndex(searchPos(racePos, availableGens.at(toDisplay).getsetRace()));
 
     // Convert from ALIGN in trinary to 0-8
     // This can be done by converting the align values to decimal. Multiply the 3s place by 3 and divide by 10 and add to the 1s place. Thus 12 = 3 + 2 = 5, and 22 = 6 + 2 = 8
@@ -82,6 +82,18 @@ editchar::~editchar()
     delete ui;
 }
 
+int editchar::searchPos(vector<int> toSearch, int id)
+{
+    for(int i = 0; i < (int)toSearch.size(); i++)
+    {
+        if(toSearch[i] == id)
+        {
+            return i;
+        }
+    }
+    return 0;
+}
+
 void editchar::onEdit()
 {
     if(!hasBeenEdited)
@@ -100,9 +112,11 @@ void editchar::onDelete()
 
     map<unsigned long, Generator>::iterator it;
     it = availableGens.find(generator);
+    NpcSaver npcSaver = NpcSaver();
     try {
         // remove NPC object from SQL
-        removeFromSQL(availableGens.at(generator));
+        //removeFromSQL(availableGens.at(generator));
+        npcSaver.removeAttribute(generator);
         availableGens.erase(it);
     }  catch (...) {
         QString error = "Could not remove NPC: ";

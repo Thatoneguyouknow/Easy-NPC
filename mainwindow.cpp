@@ -172,8 +172,12 @@ void MainWindow::onUncodedError()
 
 void MainWindow::onReset()
 {
-    // remove data.db file
-    deleteDb();
+    ClassSaver classSaver = ClassSaver();
+    classSaver.removeAllAttributes();
+    RaceSaver raceSaver = RaceSaver();
+    raceSaver.removeAllAttributes();
+    NpcSaver npcSaver = NpcSaver();
+    npcSaver.removeAllAttributes();
 }
 
 void MainWindow::onAbout()

@@ -5,6 +5,7 @@
 #include <vector>
 #include "generator.h"
 #include "Helper_Functions/errorlog.h"
+#include "Database/npcsaver.h"
 
 namespace Ui {
 class editchar;
@@ -26,10 +27,12 @@ private:
     const vector<string> alignStrs =  {"Lawful Good", "Lawful Neutral", "Lawful Evil",\
                                        "Neutral Good", "True Neutral", "Neutral Evil",\
                                        "Chaotic Good", "Chaotic Neutral", "Chaotic Evil"};
-    //vector<int> classPos;
-    //vector<int> racePos;
+    vector<int> classPos;
+    vector<int> racePos;
     unsigned long generator;
     bool hasBeenEdited = false;
+
+    int searchPos(vector<int> toSearch, int id);
 
 private slots:
     void onEdit();

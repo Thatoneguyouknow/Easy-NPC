@@ -11,6 +11,7 @@ public:
     int saveAttributes();
     int readAttributes();
     void removeAllAttributes();
+    int removeAttribute(int toRemove);
 };
 
 #endif // CLASSSAVER_H

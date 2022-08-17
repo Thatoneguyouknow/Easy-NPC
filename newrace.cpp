@@ -88,10 +88,11 @@ void NewRace::save_clicked()
     }
     else //Read values into a new race
     {
+        // ui->namingStyle->currentIndex()
         string name = ui->raceName->text().toStdString();
         Race newRace = Race(name, ui->primASIStat->currentIndex(), ui->secASIStat->currentIndex(),
                             ui->primASIVal->value(), ui->secASIVal->value(),
-                            ui->ageMax->value(), ui->ageMin->value(), ui->namingStyle->currentIndex());
+                            ui->ageMax->value(), ui->ageMin->value(), 0);
         availableRaces.insert(pair<int, Race>(newRace.getIdentifier(), newRace));
     }
 
