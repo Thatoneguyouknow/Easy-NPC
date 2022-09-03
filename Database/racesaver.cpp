@@ -2,22 +2,25 @@
 
 RaceSaver::RaceSaver()
 {
-
+    raceSqlSaveQuery = "INSERT OR IGNORE INTO RACE (ID, NAME, ASIPSTAT, ASISSTAT, "\
+                       "ASIPVAL, ASISVAL, AGEMAX, AGEMIN, NAMETYPE)" \
+                       "VALUES (:id, :name, :asipstat, :asisstat, :asipval, :asisval,"\
+                       ":agemax, :agemin, :nametype)"\
+                       "ON CONFLICT(ID) DO UPDATE SET "\
+                       "NAME=excluded.NAME, ASIPSTAT=excluded.ASIPSTAT, "\
+                       "ASISSTAT=excluded.ASISSTAT, ASIPVAL=excluded.ASIPVAL, "\
+                       "ASISVAL=excluded.ASISVAL, AGEMAX=excluded.AGEMAX, "\
+                       "AGEMIN=excluded.AGEMIN, NAMETYPE=excluded.NAMETYPE;";
+    raceSqlReadQuery = "SELECT ID, NAME,  ASIPSTAT, ASISSTAT, "\
+                       "ASIPVAL, ASISVAL, AGEMAX, AGEMIN, NAMETYPE FROM RACE";
+    raceSqlDeleteQuery = "DELETE FROM RACE";
 }
 
 int RaceSaver::saveAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.prepare("INSERT OR IGNORE INTO RACE (ID, NAME, ASIPSTAT, ASISSTAT, "\
-                  "ASIPVAL, ASISVAL, AGEMAX, AGEMIN, NAMETYPE)" \
-                  "VALUES (:id, :name, :asipstat, :asisstat, :asipval, :asisval,"\
-                  ":agemax, :agemin, :nametype)"\
-                  "ON CONFLICT(ID) DO UPDATE SET "\
-                  "NAME=excluded.NAME, ASIPSTAT=excluded.ASIPSTAT, "\
-                  "ASISSTAT=excluded.ASISSTAT, ASIPVAL=excluded.ASIPVAL, "\
-                  "ASISVAL=excluded.ASISVAL, AGEMAX=excluded.AGEMAX, "\
-                  "AGEMIN=excluded.AGEMIN, NAMETYPE=excluded.NAMETYPE;");
+    query.prepare(raceSqlSaveQuery);
 
     map<int, Race>::iterator it;
     for( it=availableRaces.begin(); it!=availableRaces.end(); it++ )
@@ -47,8 +50,7 @@ int RaceSaver::readAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.exec("SELECT ID, NAME,  ASIPSTAT, ASISSTAT, "\
-               "ASIPVAL, ASISVAL, AGEMAX, AGEMIN, NAMETYPE FROM RACE");
+    query.exec(raceSqlReadQuery);
     while( query.next() )
     {
         Race newRace;
@@ -78,6 +80,6 @@ void RaceSaver::removeAllAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.exec("DELETE FROM RACE");
+    query.exec(raceSqlDeleteQuery);
     db.close();
 }

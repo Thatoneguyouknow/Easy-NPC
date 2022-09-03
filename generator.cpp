@@ -4,20 +4,22 @@ map<unsigned long, Generator>availableGens;
 
 Generator::Generator(bool empty)
 {
-    ID = generateId();
+    RandomGenerator generator = RandomGenerator();
+    ID = generator.generateId();
     if( !empty )
     {
-        race = generateRace();
-        name = generateName();
-        charClass = generateClass();
-        alignment = generateAlign();
+        race = generator.generateRace();
+        // SEG FAULT OCCURS HERE
+        name = generator.generateName(race);
+        charClass = generator.generateClass();
+        alignment = generator.generateAlign();
 
-        level = generateLevel();
+        level = generator.generateLevel();
         // TODO: Have level generated and stats, feats, etc changed accurately
 
-        stats = generateStats(charClass);
-        hp = calculateHP(charClass);
-        personality = generatePersonailty();
+        stats = generator.generateStats(charClass, race);
+        hp = generator.calculateHP(charClass, stats[CONSTITUTION]);
+        personality = generator.generatePersonailty();
     }
 }
 

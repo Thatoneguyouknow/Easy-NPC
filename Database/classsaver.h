@@ -11,6 +11,11 @@ public:
     int saveAttributes();
     int readAttributes();
     void removeAllAttributes();
+
+private:
+    QString classSqlSaveQuery;
+    QString classSqlReadQuery;
+    QString classSqlDeleteQuery;
 };
 
 #endif // CLASSSAVER_H

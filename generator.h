@@ -16,6 +16,7 @@
 #include "Helper_Functions/racenames.h"
 #include "Helper_Functions/sqlite3.h"
 #include "Helper_Functions/errorlog.h"
+#include "Helper_Functions/randomgenerator.h"
 
 using namespace std;
 

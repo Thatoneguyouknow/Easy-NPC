@@ -80,41 +80,6 @@ int main(int argc, char *argv[])
 
     QTextStream debug(stdout);
 
-    /*if( !fileExists("data.db"))
-    {
-        debug << "Generating base classes: " << Qt::endl;
-        generateBaseClasses();
-        debug << "Generating base races: " << Qt::endl;
-        generateBaseRaces();
-        if( createTables() == -1 )
-        {
-            debug << "Could not generate base objects" << Qt::endl;
-            displayError();
-            return 0;
-        }
-    }
-    else
-    {
-        if( readGenerators() == -1 )
-        {
-            debug << "Could not read generators" << Qt::endl;
-            displayError();
-            return 0;
-        }
-        else if( readClasses() == -1 )
-        {
-            debug << "Could not read classes" << Qt::endl;
-            displayError();
-            return 0;
-        }
-        else if( readRaces() == -1 )
-        {
-            debug << "Could not read races" << Qt::endl;
-            displayError();
-            return 0;
-        }
-    }*/
-
     MainWindow mainWindow;
     mainWindow.show();
 

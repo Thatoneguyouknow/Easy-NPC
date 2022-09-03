@@ -11,6 +11,11 @@ public:
     int saveAttributes();
     int readAttributes();
     void removeAllAttributes();
+
+private:
+    QString raceSqlSaveQuery;
+    QString raceSqlReadQuery;
+    QString raceSqlDeleteQuery;
 };
 
 #endif // RACESAVER_H

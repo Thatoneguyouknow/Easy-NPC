@@ -2,24 +2,24 @@
 
 NpcSaver::NpcSaver()
 {
-
+    npcSqlSaveQuery = "INSERT INTO NPC (ID, NAME, RACEID, CLASSID, ALIGN, "\
+                      "PERPOS, PERNEU, PERNEG, LEVEL, HP, STR, DEX, CON, INT, "\
+                      "WIS, CHAR) VALUES (:id, :name, :raceid, :classid, :align, "\
+                      ":perpos, :perneu, :perneg, :level, :hp, :str, :dex, :con, :int, "\
+                      ":wis, :char) ON CONFLICT(ID) DO UPDATE SET "\
+                      "NAME=excluded.name, RACEID=excluded.RACEID, CLASSID=excluded.CLASSID, "\
+                      "ALIGN=excluded.ALIGN,PERPOS=excluded.PERPOS, "\
+                      "PERNEU=excluded.PERNEU, PERNEG=excluded.PERNEG, "\
+                      "LEVEL=excluded.LEVEL, HP=excluded.HP,"\
+                      "STR=excluded.STR, DEX=excluded.DEX, CON=excluded.CON, "\
+                      "INT=excluded.INT, WIS=excluded.WIS, CHAR=excluded.CHAR;";
 }
 
 int NpcSaver::saveAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.prepare("INSERT INTO NPC (ID, NAME, RACEID, CLASSID, ALIGN, "\
-                  "PERPOS, PERNEU, PERNEG, LEVEL, HP, STR, DEX, CON, INT, "\
-                  "WIS, CHAR) VALUES (:id, :name, :raceid, :classid, :align, "\
-                  ":perpos, :perneu, :perneg, :level, :hp, :str, :dex, :con, :int, "\
-                  ":wis, :char) ON CONFLICT(ID) DO UPDATE SET "\
-                  "NAME=excluded.name, RACEID=excluded.RACEID, CLASSID=excluded.CLASSID, "\
-                  "ALIGN=excluded.ALIGN,PERPOS=excluded.PERPOS, "\
-                  "PERNEU=excluded.PERNEU, PERNEG=excluded.PERNEG, "\
-                  "LEVEL=excluded.LEVEL, HP=excluded.HP,"\
-                  "STR=excluded.STR, DEX=excluded.DEX, CON=excluded.CON, "\
-                  "INT=excluded.INT, WIS=excluded.WIS, CHAR=excluded.CHAR;");
+    query.prepare(npcSqlSaveQuery);
     map<unsigned long, Generator>::iterator it;
     for( it=availableGens.begin(); it!=availableGens.end(); it++)
     {

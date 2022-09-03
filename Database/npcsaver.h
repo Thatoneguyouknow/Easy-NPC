@@ -11,6 +11,11 @@ public:
     int saveAttributes();
     int readAttributes();
     void removeAllAttributes();
+
+private:
+    QString npcSqlSaveQuery;
+    QString npcSqlReadQuery;
+    QString npcSqlDeleteQuery;
 };
 
 #endif // NPCSAVER_H

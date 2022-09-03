@@ -21,6 +21,7 @@ SOURCES += \
     Helper_Functions/racenames.cpp \
     Database/database.cpp \
     Database/attributesaver.cpp \
+    Helper_Functions/randomgenerator.cpp \
     card.cpp \
     charcard.cpp \
     classcard.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     Helper_Functions/racenames.h \
     Database/database.h \
     Database/attributesaver.h \
+    Helper_Functions/randomgenerator.h \
     card.h \
     charcard.h \
     classcard.h \

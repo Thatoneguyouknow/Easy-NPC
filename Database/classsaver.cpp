@@ -2,20 +2,23 @@
 
 ClassSaver::ClassSaver()
 {
-
+    classSqlSaveQuery = "INSERT OR IGNORE INTO CLASS (ID, NAME, HITDIE, "\
+                        "P1STAT, P2STAT, P3STAT, P4STAT, P5STAT, P6STAT, USERMADE) " \
+                        "VALUES (:id, :name, :hitdie, :p1stat, :p2stat, :p3stat, :p4stat, :p5stat,"\
+                        ":p6stat, :usermade) ON CONFLICT(ID) DO UPDATE SET "\
+                        "NAME=excluded.NAME, HITDIE=excluded.HITDIE, P1STAT=excluded.P1STAT, "\
+                        "P2STAT=excluded.P2STAT, P3STAT=excluded.P3STAT, P4STAT=excluded.P4STAT, "\
+                        "P5STAT=excluded.P5STAT, P6STAT=excluded.P6STAT, USERMADE=excluded.USERMADE;";
+    classSqlReadQuery = "SELECT ID, NAME, HITDIE, P1STAT, P2STAT, P3STAT, "\
+                        "P4STAT, P5STAT, P6STAT, USERMADE FROM CLASS";
+    classSqlDeleteQuery = "DELETE FROM CLASS";
 }
 
 int ClassSaver::saveAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.prepare("INSERT OR IGNORE INTO CLASS (ID, NAME, HITDIE, "\
-        "P1STAT, P2STAT, P3STAT, P4STAT, P5STAT, P6STAT, USERMADE) " \
-        "VALUES (:id, :name, :hitdie, :p1stat, :p2stat, :p3stat, :p4stat, :p5stat,"\
-        ":p6stat, :usermade) ON CONFLICT(ID) DO UPDATE SET "\
-        "NAME=excluded.NAME, HITDIE=excluded.HITDIE, P1STAT=excluded.P1STAT, "\
-        "P2STAT=excluded.P2STAT, P3STAT=excluded.P3STAT, P4STAT=excluded.P4STAT, "\
-        "P5STAT=excluded.P5STAT, P6STAT=excluded.P6STAT, USERMADE=excluded.USERMADE;");
+    query.prepare(classSqlSaveQuery);
 
     map<int, Class>::iterator it;
     for( it=availableClasses.begin(); it!=availableClasses.end(); it++ )
@@ -46,8 +49,7 @@ int ClassSaver::readAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.exec("SELECT ID, NAME, HITDIE, P1STAT, P2STAT, P3STAT, "\
-               "P4STAT, P5STAT, P6STAT, USERMADE FROM CLASS");
+    query.exec(classSqlSaveQuery);
     while( query.next() )
     {
         Class newClass;
@@ -78,6 +80,6 @@ void ClassSaver::removeAllAttributes()
 {
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query;
-    query.exec("DELETE FROM CLASS");
+    query.exec(classSqlDeleteQuery);
     db.close();
 }
